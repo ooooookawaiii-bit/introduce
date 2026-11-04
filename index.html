@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>김나비의 자기소개 모음집 💕 | 목차</title>
+    <style>
+        /* 기본 리셋 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --pink-deep: #ff1493;
+            --pink-vivid: #ff3385;
+            --pink-main: #ff66a3;
+            --pink-soft: #ffb3d1;
+            --pink-light: #fff0f5;
+            --pink-bg: #ffe4ee;
+            --black-frill: #0e0d13;
+            --black-soft: #24212a;
+            
+            /* 테마 변수 (기본: 화려한 핑크) */
+            --bg-gradient: radial-gradient(circle at 50% 20%, #ffa3c7 0%, #ff6699 45%, #e60067 100%);
+            --card-bg: linear-gradient(165deg, #ffffff 0%, #fff4f8 40%, #ffe9f2 100%);
+            --card-border: var(--black-frill);
+            --card-outline: var(--pink-deep);
+            --section-bg: #ffffff;
+            --section-border: var(--black-frill);
+            --section-shadow: rgba(255, 20, 147, 0.7);
+            --text-main: #2b1f28;
+            --text-sub: #382531;
+            --text-muted: #7a586d;
+            --item-bg: linear-gradient(90deg, #ffffff 0%, #fff0f6 100%);
+            --item-hover: #ffe4f0;
+            --btn-bg: linear-gradient(135deg, #ff3385 0%, #ff1493 100%);
+            --badge-bg: var(--black-frill);
+            --badge-color: #ffccd9;
+        }
+
+        /* 다크모드 테마 (고딕 벨벳 & 네온 핑크) */
+        body.dark-mode {
+            --bg-gradient: radial-gradient(circle at 50% 20%, #2b1129 0%, #160817 55%, #0a030b 100%);
+            --card-bg: linear-gradient(165deg, #1e1322 0%, #29182f 50%, #170c1b 100%);
+            --card-border: #ff3385;
+            --card-outline: #ff9ebb;
+            --section-bg: #271a2d;
+            --section-border: #ff3385;
+            --section-shadow: rgba(255, 51, 133, 0.5);
+            --text-main: #ffe6f2;
+            --text-sub: #fad4e8;
+            --text-muted: #d4a3be;
+            --item-bg: linear-gradient(90deg, #2e1c36 0%, #3d2347 100%);
+            --item-hover: #4e295a;
+            --btn-bg: linear-gradient(135deg, #ff1493 0%, #b8005b 100%);
+            --badge-bg: #ff3385;
+            --badge-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            padding: 56px 16px 80px 16px;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.3s ease;
+        }
+
+        /* 배경 검은 레이스 / 격자망 패턴 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(rgba(14, 13, 19, 0.22) 1.5px, transparent 1.5px),
+                linear-gradient(45deg, rgba(14, 13, 19, 0.06) 25%, transparent 25%, transparent 75%, rgba(14, 13, 19, 0.06) 75%),
+                linear-gradient(-45deg, rgba(14, 13, 19, 0.06) 25%, transparent 25%, transparent 75%, rgba(14, 13, 19, 0.06) 75%);
+            background-size: 24px 24px, 32px 32px, 32px 32px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 다크모드 플로팅 버튼 */
+        .theme-toggle-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: var(--black-frill);
+            color: #ffe6f2;
+            border: 2px solid var(--pink-deep);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.06);
+            border-color: #ff66a3;
+        }
+
+        /* 화면 상하단 검은 프릴 (Ruffles) */
+        .frill-curtain-top, .frill-curtain-bottom {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .frill-curtain-top { top: 0; }
+        .frill-curtain-bottom { bottom: 0; transform: rotate(180deg); }
+
+        .frill-svg-layer {
+            display: block;
+            width: 100%;
+            height: 38px;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.45));
+        }
+
+        .frill-svg-sub {
+            display: block;
+            width: 100%;
+            height: 26px;
+            margin-top: -10px;
+            opacity: 0.9;
+            filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.35));
+        }
+
+        /* 배경 장식 */
+        .bg-deco {
+            position: fixed;
+            font-size: 1.6rem;
+            color: rgba(255, 255, 255, 0.7);
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(0 2px 5px rgba(255, 20, 147, 0.5));
+            animation: floatDeco 4s ease-in-out infinite alternate;
+        }
+
+        .bg-deco-1 { top: 12%; left: 8%; animation-delay: 0s; font-size: 2.2rem; }
+        .bg-deco-2 { top: 20%; right: 7%; animation-delay: 1.2s; font-size: 1.8rem; }
+        .bg-deco-3 { bottom: 16%; left: 6%; animation-delay: 2.1s; font-size: 2rem; }
+        .bg-deco-4 { bottom: 22%; right: 8%; animation-delay: 0.7s; font-size: 2.4rem; }
+
+        @keyframes floatDeco {
+            0% { transform: translateY(0) rotate(-6deg); }
+            100% { transform: translateY(-16px) rotate(8deg); }
+        }
+
+        /* 카드 래퍼 */
+        .card-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            z-index: 2;
+            padding: 16px 0;
+        }
+
+        .card-frill-border-top,
+        .card-frill-border-bottom {
+            width: 100%;
+            height: 28px;
+            display: block;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+        }
+        .card-frill-border-bottom { transform: rotate(180deg); margin-top: -4px; }
+        .card-frill-border-top { margin-bottom: -4px; }
+
+        /* 메인 컨테이너 */
+        .container {
+            background: var(--card-bg);
+            border: 4px solid var(--card-border);
+            outline: 2px dashed var(--card-outline);
+            outline-offset: -8px;
+            border-radius: 32px;
+            padding: 36px 22px;
+            box-shadow: 
+                0 0 0 6px #fff,
+                0 0 0 10px var(--pink-vivid),
+                0 20px 45px rgba(26, 0, 16, 0.4);
+            position: relative;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        body.dark-mode .container {
+            box-shadow: 
+                0 0 0 6px #120716,
+                0 0 0 10px var(--pink-deep),
+                0 20px 45px rgba(0, 0, 0, 0.7);
+        }
+
+        /* 헤더 박스 */
+        .header-title-box {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .ribbon-icon {
+            display: inline-block;
+            font-size: 2rem;
+            margin-bottom: 6px;
+            animation: pulseRibbon 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseRibbon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15) rotate(4deg); }
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: var(--text-main);
+            text-shadow: 2px 2px 0px rgba(255, 102, 163, 0.4), 0 0 10px rgba(255, 51, 133, 0.4);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 900;
+        }
+
+        .header-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* 프로필 미니 배너 */
+        .profile-mini-box {
+            background: var(--section-bg);
+            border: 2px solid var(--section-border);
+            border-radius: 20px;
+            padding: 14px 16px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 3px 3px 0px var(--section-shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .profile-mini-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 5px 5px 0px var(--black-frill);
+        }
+
+        body.dark-mode .profile-mini-box:hover {
+            box-shadow: 5px 5px 0px var(--pink-deep);
+        }
+
+        .profile-mini-thumb {
+            width: 58px;
+            height: 58px;
+            min-width: 58px;
+            border-radius: 50%;
+            border: 2.5px solid var(--pink-deep);
+            outline: 2px dashed #ffffff;
+            outline-offset: -4px;
+            overflow: hidden;
+            background: #ffe4ee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .profile-mini-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 25% center;
+            display: block;
+        }
+
+        .profile-mini-meta {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-mini-name {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .profile-mini-badge {
+            background: var(--badge-bg);
+            color: var(--badge-color);
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 8px;
+            border: 1px solid var(--pink-deep);
+        }
+
+        .profile-mini-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 단계 진행 바 (Progress Steps) */
+        .step-progress-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--section-bg);
+            border: 2px solid var(--section-border);
+            border-radius: 16px;
+            padding: 10px 14px;
+            margin-bottom: 22px;
+            box-shadow: 3px 3px 0px var(--section-shadow);
+        }
+
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--text-sub);
+        }
+
+        .step-indicator .step-num {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--pink-deep);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            box-shadow: 0 2px 6px rgba(255, 20, 147, 0.4);
+        }
+
+        .step-arrow {
+            color: var(--pink-main);
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* 목차 타이틀 섹션 헤더 */
+        .toc-title-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding: 0 4px;
+        }
+
+        .toc-title-header h2 {
+            font-size: 1.15rem;
+            color: var(--text-main);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toc-title-header h2::before {
+            content: "✦";
+            color: var(--pink-deep);
+            font-size: 1.1rem;
+        }
+
+        .toc-count-pill {
+            background: var(--pink-deep);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 9px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(255, 20, 147, 0.3);
+        }
+
+        /* 네비게이션 버튼 리스트 */
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        /* 네비게이션 카드 링크 버튼 */
+        .nav-card {
+            display: block;
+            text-decoration: none;
+            background: var(--section-bg);
+            border-radius: 20px;
+            border: 2px solid var(--section-border);
+            box-shadow: 4px 4px 0px var(--section-shadow);
+            padding: 18px 18px;
+            position: relative;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 6px 7px 0px var(--black-frill);
+            border-color: var(--pink-deep);
+        }
+
+        body.dark-mode .nav-card:hover {
+            box-shadow: 6px 7px 0px var(--pink-deep);
+            border-color: #ff9ebb;
+        }
+
+        .nav-card:active {
+            transform: translateY(1px) scale(0.99);
+            box-shadow: 2px 2px 0px var(--section-shadow);
+        }
+
+        /* 카드 상단 헤더: 태그 & 번호 */
+        .card-top-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .step-badge {
+            background: linear-gradient(135deg, var(--black-frill) 0%, #2f1729 100%);
+            color: #ffccd9;
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 10px;
+            border: 1px solid var(--pink-deep);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        body.dark-mode .step-badge {
+            background: linear-gradient(135deg, #ff1493 0%, #560e34 100%);
+            color: #ffffff;
+            border-color: #ff9ebb;
+        }
+
+        .tech-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 8px;
+            background: var(--pink-light);
+            color: var(--pink-deep);
+            border: 1px dashed var(--pink-main);
+        }
+
+        body.dark-mode .tech-badge {
+            background: #391c3f;
+            color: #ff9ebb;
+            border-color: #ff3385;
+        }
+
+        /* 카드 메인 내용 영역 */
+        .card-main-body {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .card-icon-frame {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            border-radius: 14px;
+            background: var(--item-bg);
+            border: 2px solid var(--pink-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 3px 8px rgba(255, 20, 147, 0.15);
+            transition: transform 0.2s ease;
+        }
+
+        .nav-card:hover .card-icon-frame {
+            transform: scale(1.1) rotate(6deg);
+        }
+
+        .card-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-desc {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-top: 5px;
+            word-break: keep-all;
+        }
+
+        /* 카드 하단 액션 버튼 바 */
+        .card-action-bar {
+            margin-top: 14px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255, 20, 147, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-file-path {
+            font-size: 0.76rem;
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.04);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        body.dark-mode .card-file-path {
+            background: rgba(255, 255, 255, 0.08);
+            color: #d4a3be;
+        }
+
+        .card-cta-btn {
+            background: var(--btn-bg);
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 3px 10px rgba(255, 20, 147, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .nav-card:hover .card-cta-btn {
+            transform: translateX(3px);
+            box-shadow: 0 4px 14px rgba(255, 20, 147, 0.55);
+        }
+
+        /* 3단계 특별 강조 효과 */
+        .nav-card.card-featured {
+            border: 2.5px solid var(--pink-deep);
+            background: linear-gradient(170deg, var(--section-bg) 0%, rgba(255, 228, 238, 0.45) 100%);
+            box-shadow: 4px 4px 0px var(--pink-vivid);
+        }
+
+        body.dark-mode .nav-card.card-featured {
+            background: linear-gradient(170deg, var(--section-bg) 0%, rgba(65, 22, 60, 0.4) 100%);
+            box-shadow: 4px 4px 0px var(--pink-deep);
+        }
+
+        .featured-ribbon {
+            position: absolute;
+            top: 10px;
+            right: -24px;
+            background: var(--pink-deep);
+            color: #ffffff;
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 3px 26px;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            letter-spacing: 0.5px;
+            pointer-events: none;
+        }
+
+        /* 경로 모드 전환 유틸리티 바 (로컬 / introduce 폴더 호환 지원) */
+        .path-switch-box {
+            background: var(--section-bg);
+            border: 2px dashed var(--pink-main);
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 0.8rem;
+        }
+
+        .path-switch-label {
+            color: var(--text-sub);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .path-toggle-btn {
+            background: var(--black-frill);
+            color: #ffccd9;
+            border: 1.5px solid var(--pink-deep);
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-size: 0.76rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        body.dark-mode .path-toggle-btn {
+            background: var(--pink-deep);
+            color: #ffffff;
+        }
+
+        .path-toggle-btn:hover {
+            transform: scale(1.05);
+            background: var(--pink-deep);
+            color: #ffffff;
+        }
+
+        /* 하단 푸터 */
+        .footer-box {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px dashed rgba(255, 20, 147, 0.3);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .footer-heart {
+            color: var(--pink-deep);
+            display: inline-block;
+            animation: pulseRibbon 1.5s infinite ease-in-out;
+        }
+
+        /* 토스트 알림창 */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(50px);
+            background: var(--black-frill);
+            color: #ffffff;
+            border: 2px solid var(--pink-deep);
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-size: 0.86rem;
+            font-weight: 800;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-msg.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* 클릭 하트 파티클 */
+        .click-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+            font-size: 1.3rem;
+            user-select: none;
+            animation: floatUpFade 0.85s forwards ease-out;
+        }
+
+        @keyframes floatUpFade {
+            0% {
+                transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -100px) scale(1.4) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        /* 모바일 최적화 (반응형) */
+        @media (max-width: 480px) {
+            body {
+                padding: 48px 12px 70px 12px;
+            }
+
+            .container {
+                padding: 26px 14px;
+                border-radius: 26px;
+            }
+
+            h1 {
+                font-size: 1.35rem;
+            }
+
+            .theme-toggle-btn {
+                top: 10px;
+                right: 10px;
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .nav-card {
+                padding: 15px 14px;
+            }
+
+            .card-title {
+                font-size: 1.05rem;
+            }
+
+            .card-icon-frame {
+                width: 42px;
+                height: 42px;
+                min-width: 42px;
+                font-size: 1.4rem;
+            }
+
+            .profile-mini-thumb {
+                width: 50px;
+                height: 50px;
+                min-width: 50px;
+            }
+
+            .step-indicator {
+                font-size: 0.72rem;
+            }
+
+            .step-indicator .step-num {
+                width: 19px;
+                height: 19px;
+                font-size: 0.65rem;
+            }
+
+            .path-switch-box {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+                gap: 8px;
+            }
+
+            .path-toggle-btn {
+                width: 100%;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 다크모드 전환 플로팅 버튼 -->
+    <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="테마 전환">
+        <span id="themeIcon">🌙</span>
+        <span id="themeText">다크모드</span>
+    </button>
+
+    <!-- 화면 상하단 검은 프릴 (Black Ruffles) -->
+    <div class="frill-curtain-top">
+        <svg class="frill-svg-layer" viewBox="0 0 1200 45" preserveAspectRatio="none">
+            <path d="M0,0 L1200,0 L1200,20 
+                     Q1185,42 1170,20 Q1155,42 1140,20 Q1125,42 1110,20 Q1095,42 1080,20 
+                     Q1065,42 1050,20 Q1035,42 1020,20 Q1005,42 990,20 Q975,42 960,20 
+                     Q945,42 930,20 Q915,42 900,20 Q885,42 870,20 Q855,42 840,20 
+                     Q825,42 810,20 Q795,42 780,20 Q765,42 750,20 Q735,42 720,20 
+                     Q705,42 690,20 Q675,42 660,20 Q645,42 630,20 Q615,42 600,20 
+                     Q585,42 570,20 Q555,42 540,20 Q525,42 510,20 Q495,42 480,20 
+                     Q465,42 450,20 Q435,42 420,20 Q405,42 390,20 Q375,42 360,20 
+                     Q345,42 330,20 Q315,42 300,20 Q285,42 270,20 Q255,42 240,20 
+                     Q225,42 210,20 Q195,42 180,20 Q165,42 150,20 Q135,42 120,20 
+                     Q105,42 90,20 Q75,42 60,20 Q45,42 30,20 Q15,42 0,20 Z" fill="#0e0d13" />
+            <path d="M0,14 L1200,14" stroke="#ff3385" stroke-width="2" stroke-dasharray="6,6" />
+        </svg>
+        <svg class="frill-svg-sub" viewBox="0 0 1200 30" preserveAspectRatio="none">
+            <path d="M0,0 L1200,0 L1200,12 
+                     Q1190,28 1180,12 Q1170,28 1160,12 Q1150,28 1140,12 Q1130,28 1120,12 
+                     Q1110,28 1100,12 Q1090,28 1080,12 Q1070,28 1060,12 Q1050,28 1040,12 
+                     Q1030,28 1020,12 Q1010,28 1000,12 Q990,28 980,12 Q970,28 960,12 
+                     Q950,28 940,12 Q930,28 920,12 Q910,28 900,12 Q890,28 880,12 
+                     Q870,28 860,12 Q850,28 840,12 Q830,28 820,12 Q810,28 800,12 
+                     Q790,28 780,12 Q770,28 760,12 Q750,28 740,12 Q730,28 720,12 
+                     Q710,28 700,12 Q690,28 680,12 Q670,28 660,12 Q650,28 640,12 
+                     Q630,28 620,12 Q610,28 600,12 Q590,28 580,12 Q570,28 560,12 
+                     Q550,28 540,12 Q530,28 520,12 Q510,28 500,12 Q490,28 480,12 
+                     Q470,28 460,12 Q450,28 440,12 Q430,28 420,12 Q410,28 400,12 
+                     Q390,28 380,12 Q370,28 360,12 Q350,28 340,12 Q330,28 320,12 
+                     Q310,28 300,12 Q290,28 280,12 Q270,28 260,12 Q250,28 240,12 
+                     Q230,28 220,12 Q210,28 200,12 Q190,28 180,12 Q170,28 160,12 
+                     Q150,28 140,12 Q130,28 120,12 Q110,28 100,12 Q90,28 80,12 
+                     Q70,28 60,12 Q50,28 40,12 Q30,28 20,12 Q10,28 0,12 Z" fill="#24212a" />
+        </svg>
+    </div>
+
+    <div class="frill-curtain-bottom">
+        <svg class="frill-svg-layer" viewBox="0 0 1200 45" preserveAspectRatio="none">
+            <path d="M0,0 L1200,0 L1200,20 
+                     Q1185,42 1170,20 Q1155,42 1140,20 Q1125,42 1110,20 Q1095,42 1080,20 
+                     Q1065,42 1050,20 Q1035,42 1020,20 Q1005,42 990,20 Q975,42 960,20 
+                     Q945,42 930,20 Q915,42 900,20 Q885,42 870,20 Q855,42 840,20 
+                     Q825,42 810,20 Q795,42 780,20 Q765,42 750,20 Q735,42 720,20 
+                     Q705,42 690,20 Q675,42 660,20 Q645,42 630,20 Q615,42 600,20 
+                     Q585,42 570,20 Q555,42 540,20 Q525,42 510,20 Q495,42 480,20 
+                     Q465,42 450,20 Q435,42 420,20 Q405,42 390,20 Q375,42 360,20 
+                     Q345,42 330,20 Q315,42 300,20 Q285,42 270,20 Q255,42 240,20 
+                     Q225,42 210,20 Q195,42 180,20 Q165,42 150,20 Q135,42 120,20 
+                     Q105,42 90,20 Q75,42 60,20 Q45,42 30,20 Q15,42 0,20 Z" fill="#0e0d13" />
+            <path d="M0,14 L1200,14" stroke="#ff3385" stroke-width="2" stroke-dasharray="6,6" />
+        </svg>
+    </div>
+
+    <!-- 배경 장식 이모지 -->
+    <div class="bg-deco bg-deco-1">🎀</div>
+    <div class="bg-deco bg-deco-2">🖤</div>
+    <div class="bg-deco bg-deco-3">✨</div>
+    <div class="bg-deco bg-deco-4">🎀</div>
+
+    <div class="card-wrapper">
+        <!-- 카드 상단 프릴 레이스 SVG -->
+        <svg class="card-frill-border-top" viewBox="0 0 520 28" preserveAspectRatio="none">
+            <path d="M0,28 L520,28 L520,12 
+                     Q510,0 500,12 Q490,0 480,12 Q470,0 460,12 Q450,0 440,12 
+                     Q430,0 420,12 Q410,0 400,12 Q390,0 380,12 Q370,0 360,12 
+                     Q350,0 340,12 Q330,0 320,12 Q310,0 300,12 Q290,0 280,12 
+                     Q270,0 260,12 Q250,0 240,12 Q230,0 220,12 Q210,0 200,12 
+                     Q190,0 180,12 Q170,0 160,12 Q150,0 140,12 Q130,0 120,12 
+                     Q110,0 100,12 Q90,0 80,12 Q70,0 60,12 Q50,0 40,12 
+                     Q30,0 20,12 Q10,0 0,12 Z" fill="#0e0d13" />
+        </svg>
+
+        <main class="container">
+            <!-- 헤더 타이틀 -->
+            <header class="header-title-box">
+                <div class="ribbon-icon">🎀</div>
+                <h1>나를 소개합니다 🖤</h1>
+                <p class="header-subtitle">
+                    <span>✨</span>
+                    <span>포트폴리오 목차 (Table of Contents)</span>
+                    <span>✨</span>
+                </p>
+            </header>
+
+            <!-- 프로필 미니 요약 카드 -->
+            <section class="profile-mini-box" aria-label="프로필 정보">
+                <div class="profile-mini-thumb">
+                    <img src="profile.jpg" alt="김나비 프로필 사진" onerror="this.src='https://via.placeholder.com/80/ff66a3/ffffff?text=NABI'">
+                </div>
+                <div class="profile-mini-meta">
+                    <div class="profile-mini-name">
+                        <span>김나비</span>
+                        <span class="profile-mini-badge">@nabi_pink</span>
+                    </div>
+                    <p class="profile-mini-desc">웹 프로그래밍 단계별 자기소개 페이지 모음 🌸</p>
+                </div>
+            </section>
+
+            <!-- 단계 진행 표시줄 -->
+            <nav class="step-progress-bar" aria-label="단계 진행도">
+                <div class="step-indicator">
+                    <span class="step-num">1</span>
+                    <span>HTML 구조</span>
+                </div>
+                <span class="step-arrow">➔</span>
+                <div class="step-indicator">
+                    <span class="step-num">2</span>
+                    <span>CSS 디자인</span>
+                </div>
+                <span class="step-arrow">➔</span>
+                <div class="step-indicator">
+                    <span class="step-num">3</span>
+                    <span>JS 완성본</span>
+                </div>
+            </nav>
+
+            <!-- 목차 섹션 헤더 -->
+            <div class="toc-title-header">
+                <h2>자기소개 바로가기</h2>
+                <span class="toc-count-pill">총 3개 페이지</span>
+            </div>
+
+            <!-- 바로가기 네비게이션 버튼 목록 -->
+            <nav class="nav-list" aria-label="목차 페이지 링크">
+
+                <!-- 1단계: HTML 기본 -->
+                <a href="introduce/1-html.html" class="nav-card" data-sub="introduce/1-html.html" data-local="1-html.html" title="1-html.html 열기">
+                    <div class="card-top-meta">
+                        <span class="step-badge">STEP 01</span>
+                        <span class="tech-badge">HTML5 구조</span>
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-icon-frame">📄</div>
+                        <div class="card-info">
+                            <h3 class="card-title">HTML 기초 자기소개</h3>
+                            <p class="card-desc">웹의 기초 뼈대와 마크업! 제목, 사진, 리스트, 본문 태그로 구성된 담백한 첫 페이지</p>
+                        </div>
+                    </div>
+                    <div class="card-action-bar">
+                        <span class="card-file-path path-display">introduce/1-html.html</span>
+                        <span class="card-cta-btn">페이지 열기 ➔</span>
+                    </div>
+                </a>
+
+                <!-- 2단계: CSS 스타일링 -->
+                <a href="introduce/2-css.html" class="nav-card" data-sub="introduce/2-css.html" data-local="2-css.html" title="2-css.html 열기">
+                    <div class="card-top-meta">
+                        <span class="step-badge">STEP 02</span>
+                        <span class="tech-badge">CSS3 프릴 디자인</span>
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-icon-frame">🎨</div>
+                        <div class="card-info">
+                            <h3 class="card-title">CSS 스타일링 자기소개</h3>
+                            <p class="card-desc">지라이케이 &amp; 양산형 무드의 화려한 블랙 프릴, 레이스, 핑크 그라데이션 카드 스타일링</p>
+                        </div>
+                    </div>
+                    <div class="card-action-bar">
+                        <span class="card-file-path path-display">introduce/2-css.html</span>
+                        <span class="card-cta-btn">페이지 열기 ➔</span>
+                    </div>
+                </a>
+
+                <!-- 3단계: JS 인터랙션 완성본 -->
+                <a href="introduce/3-js.html" class="nav-card card-featured" data-sub="introduce/3-js.html" data-local="3-js.html" title="3-js.html 열기">
+                    <span class="featured-ribbon">BEST 💕</span>
+                    <div class="card-top-meta">
+                        <span class="step-badge">STEP 03 · FINAL</span>
+                        <span class="tech-badge">JavaScript 완성본</span>
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-icon-frame">✨</div>
+                        <div class="card-info">
+                            <h3 class="card-title">JS 인터랙티브 자기소개</h3>
+                            <p class="card-desc">다크모드 전환, 1:1 친구 대화 DM 모달, 실시간 반응 및 방명록까지 모두 담긴 최종 완성본</p>
+                        </div>
+                    </div>
+                    <div class="card-action-bar">
+                        <span class="card-file-path path-display">introduce/3-js.html</span>
+                        <span class="card-cta-btn">페이지 열기 ➔</span>
+                    </div>
+                </a>
+
+            </nav>
+
+            <!-- 경로 모드 전환 도우미 바 (introduce/ 폴더 vs 현재 폴더) -->
+            <section class="path-switch-box" aria-label="링크 경로 설정">
+                <span class="path-switch-label">
+                    <span>📁</span>
+                    <span>연결 경로 모드:</span>
+                    <strong id="currentPathModeText" style="color:var(--pink-deep);">introduce/ (기본)</strong>
+                </span>
+                <button id="togglePathBtn" class="path-toggle-btn" type="button" aria-label="경로 모드 전환">
+                    ⇄ 경로 전환 (현재 폴더)
+                </button>
+            </section>
+
+            <!-- 푸터 -->
+            <footer class="footer-box">
+                <p>Nabi's Introduce Collection <span class="footer-heart">♥</span></p>
+                <p style="font-size:0.75rem; margin-top:2px;">모바일 &amp; 데스크톱 모두에 최적화된 반응형 목차입니다.</p>
+            </footer>
+        </main>
+
+        <!-- 카드 하단 프릴 레이스 SVG -->
+        <svg class="card-frill-border-bottom" viewBox="0 0 520 28" preserveAspectRatio="none">
+            <path d="M0,28 L520,28 L520,12 
+                     Q510,0 500,12 Q490,0 480,12 Q470,0 460,12 Q450,0 440,12 
+                     Q430,0 420,12 Q410,0 400,12 Q390,0 380,12 Q370,0 360,12 
+                     Q350,0 340,12 Q330,0 320,12 Q310,0 300,12 Q290,0 280,12 
+                     Q270,0 260,12 Q250,0 240,12 Q230,0 220,12 Q210,0 200,12 
+                     Q190,0 180,12 Q170,0 160,12 Q150,0 140,12 Q130,0 120,12 
+                     Q110,0 100,12 Q90,0 80,12 Q70,0 60,12 Q50,0 40,12 
+                     Q30,0 20,12 Q10,0 0,12 Z" fill="#0e0d13" />
+        </svg>
+    </div>
+
+    <!-- 토스트 알림창 -->
+    <div id="toastMsg" class="toast-msg" role="status" aria-live="polite">
+        <span>🎀</span>
+        <span id="toastText">경로가 변경되었습니다!</span>
+    </div>
+
+    <!-- 스크립트 -->
+    <script>
+        /* =========================================================
+           1. 다크모드 테마 전환 (3-js.html과 완벽 동기화)
+           ========================================================= */
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+
+        // 저장된 테마 불러오기 (3-js.html의 profileTheme 키 공유)
+        const savedTheme = localStorage.getItem('profileTheme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.textContent = '☀️';
+            themeText.textContent = '핑크모드';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            if (isDark) {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = '핑크모드';
+                localStorage.setItem('profileTheme', 'dark');
+                showToast("🌙 고딕 다크모드로 변경되었습니다");
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = '다크모드';
+                localStorage.setItem('profileTheme', 'light');
+                showToast("🌸 러블리 핑크모드로 변경되었습니다");
+            }
+        });
+
+        /* =========================================================
+           2. 링크 경로 스마트 전환 모드 (introduce/ vs 현재 폴더)
+           - 기본값은 사용자 요청대로 introduce/ 폴더를 타겟팅합니다.
+           - index.html과 파일들이 같은 폴더에 있을 경우에도 즉시 테스트할 수 있도록 토글 지원
+           ========================================================= */
+        const togglePathBtn = document.getElementById('togglePathBtn');
+        const currentPathModeText = document.getElementById('currentPathModeText');
+        const navCards = document.querySelectorAll('.nav-card');
+        const pathDisplays = document.querySelectorAll('.path-display');
+
+        let isIntroduceFolderMode = localStorage.getItem('indexPathMode') !== 'local';
+
+        function updatePathLinks(isIntroduce) {
+            isIntroduceFolderMode = isIntroduce;
+            localStorage.setItem('indexPathMode', isIntroduce ? 'introduce' : 'local');
+
+            navCards.forEach((card, idx) => {
+                const targetUrl = isIntroduce ? card.getAttribute('data-sub') : card.getAttribute('data-local');
+                card.setAttribute('href', targetUrl);
+                if (pathDisplays[idx]) {
+                    pathDisplays[idx].textContent = targetUrl;
+                }
+            });
+
+            if (isIntroduce) {
+                currentPathModeText.textContent = 'introduce/ (기본값)';
+                togglePathBtn.textContent = '⇄ 현재 폴더로 전환';
+            } else {
+                currentPathModeText.textContent = './ (현재 폴더)';
+                togglePathBtn.textContent = '⇄ introduce/ 폴더로 전환';
+            }
+        }
+
+        // 초기 경로 상태 적용
+        updatePathLinks(isIntroduceFolderMode);
+
+        togglePathBtn.addEventListener('click', () => {
+            const nextMode = !isIntroduceFolderMode;
+            updatePathLinks(nextMode);
+            showToast(nextMode ? "📂 introduce/ 폴더 경로로 설정되었습니다." : "📂 현재 폴더(./) 경로로 설정되었습니다.");
+        });
+
+        /* =========================================================
+           3. 토스트 알림창 함수
+           ========================================================= */
+        const toastMsg = document.getElementById('toastMsg');
+        const toastText = document.getElementById('toastText');
+        let toastTimer = null;
+
+        function showToast(message) {
+            if (toastTimer) clearTimeout(toastTimer);
+            toastText.textContent = message;
+            toastMsg.classList.add('show');
+            toastTimer = setTimeout(() => {
+                toastMsg.classList.remove('show');
+            }, 2200);
+        }
+
+        /* =========================================================
+           4. 화면 클릭 시 핑크 하트/반짝이 파티클 이펙트
+           ========================================================= */
+        const particles = ['💖', '💕', '🎀', '✨', '🖤'];
+        document.addEventListener('click', (e) => {
+            // 버튼 클릭 시에도 귀여운 파티클 발생
+            const heart = document.createElement('span');
+            heart.className = 'click-heart';
+            heart.textContent = particles[Math.floor(Math.random() * particles.length)];
+            heart.style.left = `${e.clientX}px`;
+            heart.style.top = `${e.clientY}px`;
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 850);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나를 소개합니다 💕</title>
+    <style>
+        /* 기본 리셋 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --pink-deep: #ff1493;
+            --pink-vivid: #ff3385;
+            --pink-main: #ff66a3;
+            --pink-soft: #ffb3d1;
+            --pink-light: #fff0f5;
+            --pink-bg: #ffe4ee;
+            --black-frill: #0e0d13;
+            --black-soft: #24212a;
+            
+            /* 테마 변수 (기본: 화려한 핑크) */
+            --bg-gradient: radial-gradient(circle at 50% 20%, #ffa3c7 0%, #ff6699 45%, #e60067 100%);
+            --card-bg: linear-gradient(165deg, #ffffff 0%, #fff4f8 40%, #ffe9f2 100%);
+            --card-border: var(--black-frill);
+            --card-outline: var(--pink-deep);
+            --section-bg: #ffffff;
+            --section-border: var(--black-frill);
+            --section-shadow: rgba(255, 20, 147, 0.7);
+            --text-main: #2b1f28;
+            --text-sub: #382531;
+            --text-muted: #7a586d;
+            --item-bg: linear-gradient(90deg, #ffffff 0%, #fff0f6 100%);
+            --item-hover: #ffe4f0;
+            --input-bg: #ffffff;
+            --input-border: #ff9ebb;
+        }
+
+        /* 다크모드 테마 (고딕 벨벳 & 네온 핑크) */
+        body.dark-mode {
+            --bg-gradient: radial-gradient(circle at 50% 20%, #2b1129 0%, #160817 55%, #0a030b 100%);
+            --card-bg: linear-gradient(165deg, #1e1322 0%, #29182f 50%, #170c1b 100%);
+            --card-border: #ff3385;
+            --card-outline: #ff9ebb;
+            --section-bg: #271a2d;
+            --section-border: #ff3385;
+            --section-shadow: rgba(255, 51, 133, 0.5);
+            --text-main: #ffe6f2;
+            --text-sub: #fad4e8;
+            --text-muted: #d4a3be;
+            --item-bg: linear-gradient(90deg, #2e1c36 0%, #3d2347 100%);
+            --item-hover: #4e295a;
+            --input-bg: #1c1121;
+            --input-border: #ff3385;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            padding: 60px 16px 100px 16px;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.3s ease;
+        }
+
+        /* 배경 검은 레이스 패턴 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(rgba(14, 13, 19, 0.22) 1.5px, transparent 1.5px),
+                linear-gradient(45deg, rgba(14, 13, 19, 0.06) 25%, transparent 25%, transparent 75%, rgba(14, 13, 19, 0.06) 75%),
+                linear-gradient(-45deg, rgba(14, 13, 19, 0.06) 25%, transparent 25%, transparent 75%, rgba(14, 13, 19, 0.06) 75%);
+            background-size: 24px 24px, 32px 32px, 32px 32px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 다크모드 플로팅 버튼 */
+        .theme-toggle-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: var(--black-frill);
+            color: #ffe6f2;
+            border: 2px solid var(--pink-deep);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.06);
+            border-color: #ff66a3;
+        }
+
+        /* DM 열기 플로팅 버튼 */
+        .dm-floating-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 20px;
+            z-index: 100;
+            background: linear-gradient(135deg, var(--black-frill) 0%, #3a1532 100%);
+            color: #fff;
+            border: 2.5px solid var(--pink-deep);
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 20, 147, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: bounceBtn 3s infinite ease-in-out;
+        }
+
+        .dm-floating-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.6);
+        }
+
+        .dm-badge {
+            background: var(--pink-deep);
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        @keyframes bounceBtn {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* 화면 상하단 검은 프릴 */
+        .frill-curtain-top, .frill-curtain-bottom {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .frill-curtain-top { top: 0; }
+        .frill-curtain-bottom { bottom: 0; transform: rotate(180deg); }
+
+        .frill-svg-layer {
+            display: block;
+            width: 100%;
+            height: 38px;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.45));
+        }
+
+        .frill-svg-sub {
+            display: block;
+            width: 100%;
+            height: 26px;
+            margin-top: -10px;
+            opacity: 0.9;
+            filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.35));
+        }
+
+        /* 배경 장식 */
+        .bg-deco {
+            position: fixed;
+            font-size: 1.6rem;
+            color: rgba(255, 255, 255, 0.7);
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(0 2px 5px rgba(255, 20, 147, 0.5));
+            animation: floatDeco 4s ease-in-out infinite alternate;
+        }
+
+        .bg-deco-1 { top: 12%; left: 8%; animation-delay: 0s; font-size: 2.2rem; }
+        .bg-deco-2 { top: 22%; right: 7%; animation-delay: 1.2s; font-size: 1.8rem; }
+        .bg-deco-3 { bottom: 18%; left: 6%; animation-delay: 2.1s; font-size: 2rem; }
+        .bg-deco-4 { bottom: 25%; right: 9%; animation-delay: 0.7s; font-size: 2.4rem; }
+
+        @keyframes floatDeco {
+            0% { transform: translateY(0) rotate(-6deg); }
+            100% { transform: translateY(-16px) rotate(8deg); }
+        }
+
+        /* 메인 카드 래퍼 */
+        .card-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 540px;
+            z-index: 2;
+            padding: 18px 0;
+        }
+
+        .card-frill-border-top,
+        .card-frill-border-bottom {
+            width: 100%;
+            height: 28px;
+            display: block;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+        }
+        .card-frill-border-bottom { transform: rotate(180deg); margin-top: -4px; }
+        .card-frill-border-top { margin-bottom: -4px; }
+
+        /* 메인 프로필 카드 컨테이너 */
+        .container {
+            background: var(--card-bg);
+            border: 4px solid var(--card-border);
+            outline: 2px dashed var(--card-outline);
+            outline-offset: -8px;
+            border-radius: 32px;
+            padding: 38px 24px;
+            box-shadow: 
+                0 0 0 6px #fff,
+                0 0 0 10px var(--pink-vivid),
+                0 20px 45px rgba(26, 0, 16, 0.4);
+            position: relative;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        body.dark-mode .container {
+            box-shadow: 
+                0 0 0 6px #120716,
+                0 0 0 10px var(--pink-deep),
+                0 20px 45px rgba(0, 0, 0, 0.7);
+        }
+
+        .header-title-box {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .ribbon-icon {
+            display: inline-block;
+            font-size: 1.8rem;
+            margin-bottom: 4px;
+            animation: pulseRibbon 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseRibbon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15) rotate(3deg); }
+        }
+
+        h1 {
+            font-size: 1.65rem;
+            color: var(--text-main);
+            text-shadow: 2px 2px 0px rgba(255, 102, 163, 0.4), 0 0 10px rgba(255, 51, 133, 0.4);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* 섹션 공통 */
+        .card-section {
+            background: var(--section-bg);
+            border-radius: 20px;
+            padding: 20px 18px;
+            margin-bottom: 18px;
+            border: 2px solid var(--section-border);
+            box-shadow: 4px 4px 0px var(--section-shadow);
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+        }
+
+        .card-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 0px var(--black-frill);
+        }
+
+        body.dark-mode .card-section:hover {
+            box-shadow: 6px 6px 0px var(--pink-deep);
+        }
+
+        .section-photo { text-align: center; }
+
+        h2 {
+            font-size: 1.15rem;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        h2::before {
+            content: "✦";
+            color: var(--pink-deep);
+            font-size: 1.1rem;
+        }
+
+        /* 사진 영역 */
+        .photo-frame-container {
+            position: relative;
+            display: inline-block;
+            margin: 10px auto 14px auto;
+        }
+
+        .photo-frill-ring {
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            background: repeating-conic-gradient(
+                var(--black-frill) 0% 2.5%,
+                #ff66a3 2.5% 5%
+            );
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 0 4px var(--pink-vivid), 0 8px 24px rgba(0, 0, 0, 0.35);
+            position: relative;
+        }
+
+        .photo-frill-ring::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 4px dotted var(--black-frill);
+            pointer-events: none;
+        }
+
+        body.dark-mode .photo-frill-ring::before { border-color: #ff9ebb; }
+
+        .photo-frame-container img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            object-position: 25% center;
+            border-radius: 50%;
+            border: 4px solid #ffffff;
+            display: block;
+        }
+
+        .photo-badge {
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--black-frill);
+            color: #ffccd9;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 4px 14px;
+            border-radius: 12px;
+            border: 1.5px solid var(--pink-deep);
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .photo-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.65;
+            color: var(--text-sub);
+            word-break: keep-all;
+        }
+
+        p strong {
+            color: var(--text-main);
+            background: linear-gradient(120deg, #ffccd9 0%, #ff9ebb 100%);
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid #ff6699;
+        }
+
+        body.dark-mode p strong {
+            color: #fff;
+            background: linear-gradient(120deg, #61183f 0%, #a11a5b 100%);
+            border-color: #ff3385;
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        li {
+            background: var(--item-bg);
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--text-main);
+            border: 1.5px solid var(--section-border);
+            box-shadow: 2px 2px 0px var(--pink-deep);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        li:hover {
+            transform: translateX(4px);
+            background: var(--item-hover);
+        }
+
+        li .item-icon { font-size: 1.25rem; }
+
+        /* 가상 친구들 소개 카드 영역 */
+        .friends-chips-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .friend-chip {
+            background: var(--item-bg);
+            border: 1.5px solid var(--section-border);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--pink-deep);
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .friend-chip:hover {
+            transform: scale(1.05);
+            background: var(--pink-soft);
+        }
+
+        /* =========================================================
+           트위터(X) 피드 & 글쓰기
+           ========================================================= */
+        .section-twitter {
+            border: 2px solid var(--section-border);
+        }
+
+        .tweet-compose-box {
+            background: var(--input-bg);
+            border: 2px solid var(--input-border);
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 16px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .tweet-compose-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .tweet-avatar-small {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--pink-deep);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            background: #fff;
+        }
+
+        .tweet-textarea {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            outline: none;
+            resize: none;
+            min-height: 65px;
+        }
+
+        .tweet-compose-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px dashed var(--input-border);
+            padding-top: 8px;
+        }
+
+        .tweet-char-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        .tweet-submit-btn {
+            background: var(--pink-deep);
+            color: #fff;
+            border: 1.5px solid var(--black-frill);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--black-frill);
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .tweet-submit-btn:hover {
+            background: var(--pink-vivid);
+            transform: translateY(-1px);
+        }
+
+        /* 트윗 피드 목록 */
+        .tweet-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 440px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .tweet-card {
+            background: var(--item-bg);
+            border: 1.5px solid var(--section-border);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 2px 2px 0px var(--section-shadow);
+            animation: fadeInItem 0.3s ease-out;
+            position: relative;
+        }
+
+        .tweet-card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .tweet-author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tweet-author-name {
+            font-weight: 800;
+            font-size: 0.92rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tweet-handle {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .tweet-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: auto;
+            margin-right: 6px;
+        }
+
+        /* 트윗 삭제 버튼 */
+        .tweet-delete-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 2px 6px;
+            border-radius: 6px;
+            transition: color 0.15s, background 0.15s;
+        }
+
+        .tweet-delete-btn:hover {
+            color: #ff3333;
+            background: rgba(255, 0, 0, 0.12);
+        }
+
+        .tweet-content {
+            font-size: 0.93rem;
+            line-height: 1.5;
+            color: var(--text-sub);
+            white-space: pre-wrap;
+            word-break: break-word;
+            margin-bottom: 10px;
+        }
+
+        .tweet-actions {
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px dotted rgba(255, 20, 147, 0.2);
+            padding-top: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .tweet-action-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: color 0.15s, transform 0.15s;
+        }
+
+        .tweet-action-btn:hover {
+            color: var(--pink-deep);
+            transform: scale(1.1);
+        }
+
+        .tweet-action-btn.liked {
+            color: var(--pink-deep);
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           1:1 DM 팝업 모달창 (하나, 원, 모노, 나비 탭 지원)
+           ========================================================= */
+        .dm-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(14, 13, 19, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .dm-modal-backdrop.active {
+            display: flex;
+            animation: fadeInModal 0.25s ease-out;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .dm-modal {
+            background: var(--card-bg);
+            border: 3px solid var(--black-frill);
+            border-radius: 26px;
+            width: 100%;
+            max-width: 460px;
+            height: 640px;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 0 6px var(--pink-main);
+            position: relative;
+        }
+
+        .dm-modal-header {
+            background: var(--black-frill);
+            color: #fff;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--pink-deep);
+        }
+
+        .dm-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dm-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--pink-main);
+            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            background: #fff;
+        }
+
+        .dm-user-status {
+            font-size: 0.75rem;
+            color: #79f8b4;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .dm-close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+
+        .dm-close-btn:hover { color: var(--pink-deep); }
+
+        /* 캐릭터 선택 탭 바 */
+        .dm-char-tabs {
+            display: flex;
+            background: var(--black-soft);
+            border-bottom: 1.5px solid var(--pink-deep);
+            overflow-x: auto;
+            padding: 6px 8px;
+            gap: 6px;
+        }
+
+        .dm-char-tab {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffe6f2;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .dm-char-tab:hover {
+            background: rgba(255, 20, 147, 0.35);
+        }
+
+        .dm-char-tab.active {
+            background: var(--pink-deep);
+            color: #fff;
+            border-color: #fff;
+            box-shadow: 0 0 8px rgba(255, 20, 147, 0.6);
+        }
+
+        /* DM 채팅 바디 */
+        .dm-chat-body {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        body.dark-mode .dm-chat-body {
+            background: rgba(20, 10, 25, 0.55);
+        }
+
+        .dm-bubble-row {
+            display: flex;
+            gap: 8px;
+            max-width: 84%;
+        }
+
+        .dm-bubble-row.received {
+            align-self: flex-start;
+        }
+
+        .dm-bubble-row.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .dm-bubble {
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 0.92rem;
+            line-height: 1.45;
+            word-break: break-word;
+            position: relative;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.06);
+        }
+
+        .dm-bubble-row.received .dm-bubble {
+            background: #ffffff;
+            color: #2b1f28;
+            border: 1.5px solid #ffccd9;
+            border-top-left-radius: 4px;
+        }
+
+        body.dark-mode .dm-bubble-row.received .dm-bubble {
+            background: #2b1c34;
+            color: #ffe6f2;
+            border-color: #ff3385;
+        }
+
+        .dm-bubble-row.sent .dm-bubble {
+            background: linear-gradient(135deg, var(--pink-deep) 0%, #ff4d94 100%);
+            color: #ffffff;
+            border-top-right-radius: 4px;
+        }
+
+        .dm-bubble-time {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            align-self: flex-end;
+            margin-bottom: 2px;
+            white-space: nowrap;
+        }
+
+        /* 타이핑 인디케이터 */
+        .typing-indicator {
+            font-size: 0.78rem;
+            color: var(--pink-deep);
+            font-style: italic;
+            display: none;
+            padding: 4px 8px;
+            align-self: flex-start;
+            animation: blinkTyping 1.2s infinite;
+        }
+
+        @keyframes blinkTyping {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* DM 푸터 */
+        .dm-modal-footer {
+            padding: 12px;
+            background: var(--section-bg);
+            border-top: 1.5px solid var(--section-border);
+            display: flex;
+            gap: 8px;
+        }
+
+        .dm-input {
+            flex: 1;
+            background: var(--input-bg);
+            color: var(--text-main);
+            border: 2px solid var(--input-border);
+            border-radius: 20px;
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .dm-input:focus { border-color: var(--pink-deep); }
+
+        .dm-send-btn {
+            background: var(--black-frill);
+            color: #fff;
+            border: 2px solid var(--pink-deep);
+            padding: 0 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .dm-send-btn:hover {
+            background: var(--pink-deep);
+            transform: scale(1.05);
+        }
+
+        /* 방명록 */
+        .section-guestbook { margin-bottom: 0; }
+        .guestbook-desc { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px; }
+        .guestbook-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .guestbook-input, .guestbook-textarea {
+            width: 100%;
+            background: var(--input-bg);
+            color: var(--text-main);
+            border: 2px solid var(--input-border);
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 0.92rem;
+            font-family: inherit;
+            outline: none;
+        }
+        .guestbook-input:focus, .guestbook-textarea:focus { border-color: var(--pink-deep); }
+        .guestbook-textarea { resize: vertical; min-height: 65px; }
+
+        .guestbook-btn {
+            background: linear-gradient(135deg, var(--black-frill) 0%, #30172c 100%);
+            color: #ffe4f0;
+            border: 2px solid var(--pink-deep);
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--pink-deep);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+        .guestbook-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 3px 3px 0px var(--pink-vivid);
+        }
+
+        .guestbook-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .guestbook-item {
+            background: var(--item-bg);
+            border: 1.5px solid var(--section-border);
+            border-radius: 14px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: 2px 2px 0px var(--section-shadow);
+        }
+
+        .guestbook-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .guestbook-author { font-weight: 700; color: var(--pink-deep); }
+        .guestbook-date { font-size: 0.75rem; color: var(--text-muted); }
+        .guestbook-message { font-size: 0.92rem; line-height: 1.5; color: var(--text-sub); }
+        .guestbook-del-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 6px;
+        }
+        .guestbook-del-btn:hover { color: #ff3333; }
+
+        /* 모바일 최적화 */
+        @media (max-width: 480px) {
+            body { padding: 50px 12px 90px 12px; }
+            .theme-toggle-btn { top: 10px; right: 10px; padding: 6px 12px; font-size: 0.8rem; }
+            .dm-floating-btn { bottom: 16px; right: 14px; padding: 10px 16px; font-size: 0.88rem; }
+            .container { padding: 26px 16px; border-radius: 26px; }
+            h1 { font-size: 1.35rem; }
+            .photo-frill-ring { width: 190px; height: 190px; }
+            .photo-frame-container img { width: 165px; height: 165px; }
+            .card-section { padding: 16px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 다크모드 전환 토글 버튼 -->
+    <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="테마 전환">
+        <span id="themeIcon">🌙</span>
+        <span id="themeText">다크모드</span>
+    </button>
+
+    <!-- 1:1 DM 플로팅 버튼 -->
+    <button id="openDmBtn" class="dm-floating-btn" aria-label="친구들과 DM 보내기">
+        <span>✉️ 친구들과 DM</span>
+        <span class="dm-badge" id="dmUnreadBadge">3</span>
+    </button>
+
+    <!-- 화면 상하단 검은 프릴 (Black Ruffles) -->
+    <div class="frill-curtain-top">
+        <svg class="frill-svg-layer" viewBox="0 0 1200 45" preserveAspectRatio="none">
+            <path d="M0,0 L1200,0 L1200,20 
+                     Q1185,42 1170,20 Q1155,42 1140,20 Q1125,42 1110,20 Q1095,42 1080,20 
+                     Q1065,42 1050,20 Q1035,42 1020,20 Q1005,42 990,20 Q975,42 960,20 
+                     Q945,42 930,20 Q915,42 900,20 Q885,42 870,20 Q855,42 840,20 
+                     Q825,42 810,20 Q795,42 780,20 Q765,42 750,20 Q735,42 720,20 
+                     Q705,42 690,20 Q675,42 660,20 Q645,42 630,20 Q615,42 600,20 
+                     Q585,42 570,20 Q555,42 540,20 Q525,42 510,20 Q495,42 480,20 
+                     Q465,42 450,20 Q435,42 420,20 Q405,42 390,20 Q375,42 360,20 
+                     Q345,42 330,20 Q315,42 300,20 Q285,42 270,20 Q255,42 240,20 
+                     Q225,42 210,20 Q195,42 180,20 Q165,42 150,20 Q135,42 120,20 
+                     Q105,42 90,20 Q75,42 60,20 Q45,42 30,20 Q15,42 0,20 Z" fill="#0e0d13" />
+            <path d="M0,14 L1200,14" stroke="#ff3385" stroke-width="2" stroke-dasharray="6,6" />
+        </svg>
+        <svg class="frill-svg-sub" viewBox="0 0 1200 30" preserveAspectRatio="none">
+            <path d="M0,0 L1200,0 L1200,12 
+                     Q1190,28 1180,12 Q1170,28 1160,12 Q1150,28 1140,12 Q1130,28 1120,12 
+                     Q1110,28 1100,12 Q1090,28 1080,12 Q1070,28 1060,12 Q1050,28 1040,12 
+                     Q1030,28 1020,12 Q1010,28 1000,12 Q990,28 980,12 Q970,28 960,12 
+                     Q950,28 940,12 Q930,28 920,12 Q910,28 900,12 Q890,28 880,12 
+                     Q870,28 860,12 Q850,28 840,12 Q830,28 820,12 Q810,28 800,12 
+                     Q790,28 780,12 Q770,28 760,12 Q750,28 740,12 Q730,28 720,12 
+                     Q710,28 700,12 Q690,28 680,12 Q670,28 660,12 Q650,28 640,12 
+                     Q630,28 620,12 Q610,28 600,12 Q590,28 580,12 Q570,28 560,12 
+                     Q550,28 540,12 Q530,28 520,12 Q510,28 500,12 Q490,28 480,12 
+                     Q470,28 460,12 Q450,28 440,12 Q430,28 420,12 Q410,28 400,12 
+                     Q390,28 380,12 Q370,28 360,12 Q350,28 340,12 Q330,28 320,12 
+                     Q310,28 300,12 Q290,28 280,12 Q270,28 260,12 Q250,28 240,12 
+                     Q230,28 220,12 Q210,28 200,12 Q190,28 180,12 Q170,28 160,12 
+                     Q150,28 140,12 Q130,28 120,12 Q110,28 100,12 Q90,28 80,12 
+                     Q70,28 60,12 Q50,28 40,12 Q30,28 20,12 Q10,28 0,12 Z" fill="#24212a" />
+        </svg>
+    </div>
+
+    <div class="frill-curtain-bottom">
+        <svg class="frill-svg-layer" viewBox="0 0 1200 45" preserveAspectRatio="none">
+            <path d="M0,0 L1200,0 L1200,20 
+                     Q1185,42 1170,20 Q1155,42 1140,20 Q1125,42 1110,20 Q1095,42 1080,20 
+                     Q1065,42 1050,20 Q1035,42 1020,20 Q1005,42 990,20 Q975,42 960,20 
+                     Q945,42 930,20 Q915,42 900,20 Q885,42 870,20 Q855,42 840,20 
+                     Q825,42 810,20 Q795,42 780,20 Q765,42 750,20 Q735,42 720,20 
+                     Q705,42 690,20 Q675,42 660,20 Q645,42 630,20 Q615,42 600,20 
+                     Q585,42 570,20 Q555,42 540,20 Q525,42 510,20 Q495,42 480,20 
+                     Q465,42 450,20 Q435,42 420,20 Q405,42 390,20 Q375,42 360,20 
+                     Q345,42 330,20 Q315,42 300,20 Q285,42 270,20 Q255,42 240,20 
+                     Q225,42 210,20 Q195,42 180,20 Q165,42 150,20 Q135,42 120,20 
+                     Q105,42 90,20 Q75,42 60,20 Q45,42 30,20 Q15,42 0,20 Z" fill="#0e0d13" />
+            <path d="M0,14 L1200,14" stroke="#ff3385" stroke-width="2" stroke-dasharray="6,6" />
+        </svg>
+    </div>
+
+    <!-- 배경 장식 -->
+    <div class="bg-deco bg-deco-1">🎀</div>
+    <div class="bg-deco bg-deco-2">🖤</div>
+    <div class="bg-deco bg-deco-3">✨</div>
+    <div class="bg-deco bg-deco-4">🎀</div>
+
+    <div class="card-wrapper">
+        <svg class="card-frill-border-top" viewBox="0 0 520 28" preserveAspectRatio="none">
+            <path d="M0,28 L520,28 L520,12 
+                     Q510,0 500,12 Q490,0 480,12 Q470,0 460,12 Q450,0 440,12 
+                     Q430,0 420,12 Q410,0 400,12 Q390,0 380,12 Q370,0 360,12 
+                     Q350,0 340,12 Q330,0 320,12 Q310,0 300,12 Q290,0 280,12 
+                     Q270,0 260,12 Q250,0 240,12 Q230,0 220,12 Q210,0 200,12 
+                     Q190,0 180,12 Q170,0 160,12 Q150,0 140,12 Q130,0 120,12 
+                     Q110,0 100,12 Q90,0 80,12 Q70,0 60,12 Q50,0 40,12 
+                     Q30,0 20,12 Q10,0 0,12 Z" fill="#0e0d13" />
+        </svg>
+
+        <div class="container">
+            <div class="header-title-box">
+                <div class="ribbon-icon">🎀</div>
+                <h1>안녕하세요! 저를 소개합니다 🖤</h1>
+            </div>
+
+            <!-- 사진 넣을 자리 -->
+            <div class="card-section section-photo">
+                <h2>내 사진</h2>
+                <div class="photo-frame-container">
+                    <div class="photo-frill-ring">
+                        <img src="profile.jpg" alt="내 얼굴 사진">
+                    </div>
+                    <span class="photo-badge">MY PROFILE 💕</span>
+                </div>
+                <p class="photo-caption"><em>마도카 &amp; 호무라</em></p>
+            </div>
+
+            <!-- 기본 정보 / 이름 -->
+            <div class="card-section section-info">
+                <h2>내 이름</h2>
+                <p><strong>이름</strong> 김나비 <span style="font-size:0.85rem; color:var(--text-muted); margin-left:6px;">@nabi_pink</span></p>
+            </div>
+
+            <!-- 좋아하는 것 3가지 -->
+            <div class="card-section section-likes">
+                <h2>내가 좋아하는 것 3가지</h2>
+                <ul>
+                    <li>
+                        <span class="item-icon">🎨</span>
+                        <span>그림그리기</span>
+                    </li>
+                    <li>
+                        <span class="item-icon">🎵</span>
+                        <span>노래 듣기</span>
+                    </li>
+                    <li>
+                        <span class="item-icon">💤</span>
+                        <span>잠 자기</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 내 꿈 -->
+            <div class="card-section section-dream">
+                <h2>나의 꿈</h2>
+                <p>사람들에게 행복과 긍정적인 에너지를 주는 멋진 크리에이터가 되는 것입니다!</p>
+            </div>
+
+            <!-- 귀여운 친구들 (하나, 원, 모노) -->
+            <div class="card-section section-friends">
+                <h2>나의 소중한 친구들 👭👦</h2>
+                <p style="font-size:0.88rem; margin-bottom:8px; color:var(--text-muted);">친구들을 클릭하면 바로 1:1 대화(DM)를 나눌 수 있어!</p>
+                <div class="friends-chips-container">
+                    <button class="friend-chip" onclick="openDirectDm('hana')">
+                        <span>🌸</span> 하나 (여) 💕
+                    </button>
+                    <button class="friend-chip" onclick="openDirectDm('won')">
+                        <span>🎀</span> 원 (여) 💖
+                    </button>
+                    <button class="friend-chip" onclick="openDirectDm('mono')">
+                        <span>🐾</span> 모노 (남) 🐾
+                    </button>
+                </div>
+            </div>
+
+            <!-- 친구들에게 한마디 -->
+            <div class="card-section section-message">
+                <h2>친구들에게 한마디</h2>
+                <p>만나서 정말 반가워요! 앞으로 우리 더 친하게 지내요 😊🖤</p>
+            </div>
+
+            <!-- 트위터(X) 스타일 글쓰기 & 타임라인 피드 -->
+            <div class="card-section section-twitter">
+                <h2>나비의 트윗 타임라인 💬</h2>
+                
+                <div class="tweet-compose-box">
+                    <div class="tweet-compose-header">
+                        <img src="profile.jpg" alt="나비" class="tweet-avatar-small">
+                        <textarea id="tweetInput" class="tweet-textarea" placeholder="무슨 일이 일어나고 있나요? 🎀" maxlength="280"></textarea>
+                    </div>
+                    <div class="tweet-compose-footer">
+                        <span id="tweetCharCount" class="tweet-char-count">280자 남음</span>
+                        <button id="tweetSubmitBtn" class="tweet-submit-btn">트윗하기 🎀</button>
+                    </div>
+                </div>
+
+                <!-- 피드 목록 -->
+                <div id="tweetFeed" class="tweet-feed">
+                    <!-- 자바스크립트로 렌더링 -->
+                </div>
+            </div>
+
+            <!-- 방명록 섹션 -->
+            <div class="card-section section-guestbook">
+                <h2>방명록 💌</h2>
+                <p class="guestbook-desc">나비에게 응원이나 하고 싶은 말을 자유롭게 남겨줘!</p>
+                
+                <form id="guestbookForm" class="guestbook-form" onsubmit="return false;">
+                    <input type="text" id="guestName" class="guestbook-input" placeholder="너의 이름이나 닉네임" maxlength="15" required>
+                    <textarea id="guestMessage" class="guestbook-textarea" placeholder="여기에 남기고 싶은 메시지를 적어줘 💕" maxlength="150" required></textarea>
+                    <button type="submit" id="guestSubmitBtn" class="guestbook-btn">
+                        <span>메시지 남기기</span> 🎀
+                    </button>
+                </form>
+
+                <div id="guestbookList" class="guestbook-list">
+                    <!-- 자바스크립트로 렌더링 -->
+                </div>
+            </div>
+        </div>
+
+        <svg class="card-frill-border-bottom" viewBox="0 0 520 28" preserveAspectRatio="none">
+            <path d="M0,28 L520,28 L520,12 
+                     Q510,0 500,12 Q490,0 480,12 Q470,0 460,12 Q450,0 440,12 
+                     Q430,0 420,12 Q410,0 400,12 Q390,0 380,12 Q370,0 360,12 
+                     Q350,0 340,12 Q330,0 320,12 Q310,0 300,12 Q290,0 280,12 
+                     Q270,0 260,12 Q250,0 240,12 Q230,0 220,12 Q210,0 200,12 
+                     Q190,0 180,12 Q170,0 160,12 Q150,0 140,12 Q130,0 120,12 
+                     Q110,0 100,12 Q90,0 80,12 Q70,0 60,12 Q50,0 40,12 
+                     Q30,0 20,12 Q10,0 0,12 Z" fill="#0e0d13" />
+        </svg>
+    </div>
+
+    <!-- =========================================================
+         1:1 DM 팝업 대화창 모달 (하나, 원, 모노, 나비)
+         ========================================================= -->
+    <div id="dmModalBackdrop" class="dm-modal-backdrop">
+        <div class="dm-modal">
+            <!-- 모달 상단 헤더 -->
+            <div class="dm-modal-header">
+                <div class="dm-user-info">
+                    <div id="dmHeaderAvatar" class="dm-avatar">💕</div>
+                    <div>
+                        <div id="dmHeaderName" style="font-weight: 800; font-size: 0.95rem;">김나비 💕</div>
+                        <div id="dmHeaderStatus" class="dm-user-status"><span>●</span> 온라인 (답장 가능)</div>
+                    </div>
+                </div>
+                <button id="closeDmBtn" class="dm-close-btn" title="닫기">✕</button>
+            </div>
+
+            <!-- 대화 상대 선택 탭 바 -->
+            <div class="dm-char-tabs">
+                <button class="dm-char-tab active" data-char="nabi">💕 나비</button>
+                <button class="dm-char-tab" data-char="hana">🌸 하나(여)</button>
+                <button class="dm-char-tab" data-char="won">🎀 원(여)</button>
+                <button class="dm-char-tab" data-char="mono">🐾 모노(남)</button>
+            </div>
+
+            <!-- 대화 내역 바디 -->
+            <div id="dmChatBody" class="dm-chat-body">
+                <!-- 자바스크립트로 대화 렌더링 -->
+            </div>
+
+            <!-- 타이핑 표시기 -->
+            <div id="typingIndicator" class="typing-indicator">
+                <span id="typingCharName">하나</span>(이)가 메시지를 작성 중... 💬
+            </div>
+
+            <!-- 메시지 입력창 -->
+            <div class="dm-modal-footer">
+                <input type="text" id="dmInput" class="dm-input" placeholder="메시지를 입력해줘..." maxlength="200">
+                <button id="dmSendBtn" class="dm-send-btn">전송 💌</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 기능 구현 -->
+    <script>
+        /* =========================================================
+           1. 다크모드 전환
+           ========================================================= */
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+
+        const savedTheme = localStorage.getItem('profileTheme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.textContent = '☀️';
+            themeText.textContent = '핑크모드';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            if (isDark) {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = '핑크모드';
+                localStorage.setItem('profileTheme', 'dark');
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = '다크모드';
+                localStorage.setItem('profileTheme', 'light');
+            }
+        });
+
+        /* =========================================================
+           2. 트위터(X) 피드 & 트윗 삭제 기능
+           ========================================================= */
+        const tweetInput = document.getElementById('tweetInput');
+        const tweetCharCount = document.getElementById('tweetCharCount');
+        const tweetSubmitBtn = document.getElementById('tweetSubmitBtn');
+        const tweetFeed = document.getElementById('tweetFeed');
+
+        tweetInput.addEventListener('input', () => {
+            const remaining = 280 - tweetInput.value.length;
+            tweetCharCount.textContent = `${remaining}자 남음`;
+        });
+
+        const defaultTweets = [
+            {
+                id: 1,
+                author: "김나비",
+                handle: "@nabi_pink",
+                avatar: "profile.jpg",
+                isAvatarImg: true,
+                content: "새로 꾸민 자기소개 페이지 어때? 마음에 들었으면 좋겠어! 🎀 검은 프릴이랑 핑크 조합 최고야 🖤✨\n#자기소개 #홈페이지",
+                time: "10분 전",
+                likes: 12,
+                isLiked: false,
+                retweets: 3
+            },
+            {
+                id: 2,
+                author: "하나 🌸",
+                handle: "@hana_cute",
+                avatar: "🌸",
+                isAvatarImg: false,
+                content: "나비야 웹페이지 넘 귀엽잖아!! 으앙 나 오늘 딸기 마카롱 먹었는데 나비도 꼭 먹어봐 🍰💕",
+                time: "25분 전",
+                likes: 18,
+                isLiked: true,
+                retweets: 4
+            },
+            {
+                id: 3,
+                author: "원 🎀",
+                handle: "@won_lovely",
+                avatar: "🎀",
+                isAvatarImg: false,
+                content: "헤헤 나비랑 하나랑 셋이서 언제 디저트 카페 갈까? 넘 기대된당 (´▽`ʃ♡ƪ)",
+                time: "40분 전",
+                likes: 15,
+                isLiked: false,
+                retweets: 2
+            },
+            {
+                id: 4,
+                author: "모노 🐾",
+                handle: "@mono_boy",
+                avatar: "🐾",
+                isAvatarImg: false,
+                content: "누나들 나도 디저트 카페 데려가줘!! 나도 단 거 짱 좋아한단 말이야 🍕🍰 ㅋㅋㅋ",
+                time: "1시간 전",
+                likes: 21,
+                isLiked: true,
+                retweets: 7
+            }
+        ];
+
+        function getTweets() {
+            const stored = localStorage.getItem('userTweets_v2');
+            if (!stored) {
+                localStorage.setItem('userTweets_v2', JSON.stringify(defaultTweets));
+                return defaultTweets;
+            }
+            try { return JSON.parse(stored); } catch (e) { return defaultTweets; }
+        }
+
+        function saveTweets(tweets) {
+            localStorage.setItem('userTweets_v2', JSON.stringify(tweets));
+        }
+
+        function renderTweets() {
+            const tweets = getTweets();
+            tweetFeed.innerHTML = '';
+
+            if (tweets.length === 0) {
+                tweetFeed.innerHTML = '<div style="text-align:center; padding:20px 0; color:var(--text-muted); font-size:0.9rem;">작성된 트윗이 없습니다. 첫 트윗을 남겨보세요! 🎀</div>';
+                return;
+            }
+
+            tweets.forEach(tweet => {
+                const card = document.createElement('div');
+                card.className = 'tweet-card';
+                
+                const avatarHtml = tweet.isAvatarImg
+                    ? `<img src="${tweet.avatar}" alt="${escapeHtml(tweet.author)}" class="tweet-avatar-small">`
+                    : `<div class="tweet-avatar-small">${tweet.avatar}</div>`;
+
+                card.innerHTML = `
+                    <div class="tweet-card-top">
+                        ${avatarHtml}
+                        <div class="tweet-author-info">
+                            <span class="tweet-author-name">${escapeHtml(tweet.author)}</span>
+                            <span class="tweet-handle">${escapeHtml(tweet.handle)}</span>
+                        </div>
+                        <span class="tweet-time">${tweet.time}</span>
+                        <button class="tweet-delete-btn" onclick="deleteTweet(${tweet.id})" title="트윗 삭제">✕</button>
+                    </div>
+                    <div class="tweet-content">${escapeHtml(tweet.content)}</div>
+                    <div class="tweet-actions">
+                        <button class="tweet-action-btn" onclick="actionReply('${escapeHtml(tweet.handle)}')">💬 답글</button>
+                        <button class="tweet-action-btn" onclick="toggleRetweet(${tweet.id})">🔁 <span>${tweet.retweets}</span></button>
+                        <button class="tweet-action-btn ${tweet.isLiked ? 'liked' : ''}" onclick="toggleLike(${tweet.id})">
+                            ${tweet.isLiked ? '💖' : '🤍'} <span>${tweet.likes}</span>
+                        </button>
+                    </div>
+                `;
+                tweetFeed.appendChild(card);
+            });
+        }
+
+        // 트윗 작성
+        tweetSubmitBtn.addEventListener('click', () => {
+            const text = tweetInput.value.trim();
+            if (!text) {
+                alert('트윗할 내용을 입력해줘! 🎀');
+                return;
+            }
+
+            const newTweet = {
+                id: Date.now(),
+                author: "김나비 (나)",
+                handle: "@nabi_pink",
+                avatar: "profile.jpg",
+                isAvatarImg: true,
+                content: text,
+                time: "방금 전",
+                likes: 0,
+                isLiked: false,
+                retweets: 0
+            };
+
+            const tweets = getTweets();
+            tweets.unshift(newTweet);
+            saveTweets(tweets);
+
+            tweetInput.value = '';
+            tweetCharCount.textContent = '280자 남음';
+            renderTweets();
+        });
+
+        // 트윗 삭제 기능
+        window.deleteTweet = function(id) {
+            if (!confirm('이 트윗을 삭제할까요? 🗑️')) return;
+            let tweets = getTweets();
+            tweets = tweets.filter(t => t.id !== id);
+            saveTweets(tweets);
+            renderTweets();
+        };
+
+        window.toggleLike = function(id) {
+            const tweets = getTweets();
+            const target = tweets.find(t => t.id === id);
+            if (target) {
+                target.isLiked = !target.isLiked;
+                target.likes += target.isLiked ? 1 : -1;
+                saveTweets(tweets);
+                renderTweets();
+            }
+        };
+
+        window.toggleRetweet = function(id) {
+            const tweets = getTweets();
+            const target = tweets.find(t => t.id === id);
+            if (target) {
+                target.retweets += 1;
+                saveTweets(tweets);
+                renderTweets();
+            }
+        };
+
+        window.actionReply = function(handle) {
+            tweetInput.focus();
+            tweetInput.value = `${handle} `;
+            tweetCharCount.textContent = `${280 - tweetInput.value.length}자 남음`;
+        };
+
+        /* =========================================================
+           3. 가상 인물들 (하나, 원, 모노) & 일상 대화 DM 엔진
+           ========================================================= */
+        const characters = {
+            nabi: {
+                id: 'nabi',
+                name: '김나비 💕',
+                avatar: 'profile.jpg',
+                isImg: true,
+                desc: '나비 본인',
+                status: '온라인 (답장 가능 🟢)',
+                initialMsg: "안녕! 개인적으로 비밀스럽게 하고 싶은 말이 있다면 여기에 편하게 남겨줘 💕"
+            },
+            hana: {
+                id: 'hana',
+                name: '하나 🌸 (귀여운 여사친)',
+                avatar: '🌸',
+                isImg: false,
+                desc: '발랄하고 애교 가득한 친구',
+                status: '딸기 디저트 먹는 중 🍰',
+                initialMsg: "나비야 안녀엉~!! 🌸 오늘 나비 보고 싶어서 달려왔어! 뭐하고 놀까? (｡♥‿♥｡)"
+            },
+            won: {
+                id: 'won',
+                name: '원 🎀 (귀여운 여사친)',
+                avatar: '🎀',
+                isImg: false,
+                desc: '포근하고 다정한 친구',
+                status: '음악 듣는 중 🎧',
+                initialMsg: "헤헤 나비야 반가워~ 오늘도 좋은 하루 보내구 있어? 몽글몽글 기분 좋은 날이야 ✨"
+            },
+            mono: {
+                id: 'mono',
+                name: '모노 🐾 (귀여운 남사친)',
+                avatar: '🐾',
+                isImg: false,
+                desc: '장난기 많고 귀여운 남동생/친구',
+                status: '축구하고 쉬는 중 ⚽',
+                initialMsg: "나비 누나/친구 안녕! 🐾 나 심심했는데 DM 줘서 완전 좋다! 오늘 무슨 재밌는 일 있어? 😆"
+            }
+        };
+
+        let currentCharId = 'nabi';
+
+        const openDmBtn = document.getElementById('openDmBtn');
+        const closeDmBtn = document.getElementById('closeDmBtn');
+        const dmModalBackdrop = document.getElementById('dmModalBackdrop');
+        const dmChatBody = document.getElementById('dmChatBody');
+        const dmInput = document.getElementById('dmInput');
+        const dmSendBtn = document.getElementById('dmSendBtn');
+        const dmUnreadBadge = document.getElementById('dmUnreadBadge');
+        const dmHeaderName = document.getElementById('dmHeaderName');
+        const dmHeaderStatus = document.getElementById('dmHeaderStatus');
+        const dmHeaderAvatar = document.getElementById('dmHeaderAvatar');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const typingCharName = document.getElementById('typingCharName');
+        const charTabs = document.querySelectorAll('.dm-char-tab');
+
+        // 캐릭터별 DM 기록 불러오기
+        function getCharDMs(charId) {
+            const key = `profileDMs_${charId}`;
+            const stored = localStorage.getItem(key);
+            if (!stored) {
+                const initial = [{
+                    sender: charId,
+                    text: characters[charId].initialMsg,
+                    time: "19:00"
+                }];
+                localStorage.setItem(key, JSON.stringify(initial));
+                return initial;
+            }
+            try { return JSON.parse(stored); } catch (e) { return []; }
+        }
+
+        function saveCharDMs(charId, dms) {
+            localStorage.setItem(`profileDMs_${charId}`, JSON.stringify(dms));
+        }
+
+        function switchChar(charId) {
+            currentCharId = charId;
+            const char = characters[charId];
+
+            // 탭 UI 활성화
+            charTabs.forEach(tab => {
+                tab.classList.toggle('active', tab.getAttribute('data-char') === charId);
+            });
+
+            // 헤더 정보 갱신
+            dmHeaderName.textContent = char.name;
+            dmHeaderStatus.innerHTML = `<span>●</span> ${char.status}`;
+            
+            if (char.isImg) {
+                dmHeaderAvatar.innerHTML = `<img src="${char.avatar}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+            } else {
+                dmHeaderAvatar.innerHTML = char.avatar;
+            }
+
+            renderCharDMs();
+        }
+
+        function renderCharDMs() {
+            const dms = getCharDMs(currentCharId);
+            dmChatBody.innerHTML = '';
+
+            dms.forEach(msg => {
+                const row = document.createElement('div');
+                row.className = `dm-bubble-row ${msg.sender === 'user' ? 'sent' : 'received'}`;
+                row.innerHTML = `
+                    <div class="dm-bubble">${escapeHtml(msg.text)}</div>
+                    <span class="dm-bubble-time">${msg.time}</span>
+                `;
+                dmChatBody.appendChild(row);
+            });
+
+            dmChatBody.scrollTop = dmChatBody.scrollHeight;
+        }
+
+        // 특정 친구로 바로 DM 열기
+        window.openDirectDm = function(charId) {
+            openDmModal();
+            switchChar(charId);
+        };
+
+        function openDmModal() {
+            dmModalBackdrop.classList.add('active');
+            dmUnreadBadge.style.display = 'none';
+            renderCharDMs();
+            setTimeout(() => dmInput.focus(), 150);
+        }
+
+        openDmBtn.addEventListener('click', () => {
+            openDmModal();
+        });
+
+        closeDmBtn.addEventListener('click', () => {
+            dmModalBackdrop.classList.remove('active');
+        });
+
+        dmModalBackdrop.addEventListener('click', (e) => {
+            if (e.target === dmModalBackdrop) {
+                dmModalBackdrop.classList.remove('active');
+            }
+        });
+
+        // 탭 클릭 이벤트
+        charTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetChar = tab.getAttribute('data-char');
+                switchChar(targetChar);
+            });
+        });
+
+        /* ---------------------------------------------------------
+           스마트 일상 대화 응답 엔진 (자연어 & 키워드 반응)
+           --------------------------------------------------------- */
+        function generateDailyReply(charId, message) {
+            const msg = message.toLowerCase();
+
+            // 1. 하나 (애교 넘치고 발랄한 귀여운 소녀)
+            if (charId === 'hana') {
+                if (msg.includes('안녕') || msg.includes('하이') || msg.includes('반가')) {
+                    return "나비야 안뇨옹! (｡♥‿♥｡) 오늘도 얼굴 보니까 너무너무 좋다! 오늘 무슨 일 있었어?";
+                }
+                if (msg.includes('밥') || msg.includes('먹') || msg.includes('디저트') || msg.includes('케이크') || msg.includes('배고')) {
+                    return "나 방금 달콤한 딸기 타르트 먹었지롱 🍓🍰 나비도 맛있는 거 꼭 챙겨 먹어야 해 알았지?";
+                }
+                if (msg.includes('뭐해') || msg.includes('심심') || msg.includes('놀자')) {
+                    return "나 지금 침대에서 뒹굴거리면서 나비 연락 기다리고 있었어 헤헤! 우리 재밌는 얘기 하장 💕";
+                }
+                if (msg.includes('귀여') || msg.includes('예뻐') || msg.includes('좋아') || msg.includes('사랑')) {
+                    return "으앙 나비가 그렇게 말해주니까 볼 빨개졌잖아... (//∇//) 나두 나비가 세상에서 젤 좋아!";
+                }
+                if (msg.includes('졸려') || msg.includes('잘자') || msg.includes('잠') || msg.includes('피곤')) {
+                    return "오늘 하루도 너무 수고 많았어 나비야! 따뜻하게 코 자구 꿈에서 만나자 잘자 🌙✨";
+                }
+                if (msg.includes('노래') || msg.includes('그림') || msg.includes('취미')) {
+                    return "나비 그림 진짜 잘 그리잖아! 나중에 나도 예쁘게 하나 그려주면 안 돼? 헤헤 기대할게 🎨";
+                }
+                const hanaDaily = [
+                    "히히 나비랑 얘기하니까 기분 짱 좋아졌어! 역시 나비가 최고야 💕",
+                    "나비야 오늘 하늘 봤어? 구름이 몽실몽실 솜사탕 같더라 ☁️",
+                    "에헤헤 나비는 어쩜 말도 이렇게 예쁘게 할까? 천사 아니야? 👼",
+                    "나 오늘 예쁜 헤어핀 샀는데 다음에 만날 때 보여줄게! 🌸",
+                    "웅웅 나비 말 다 맞아! 나는 언제나 나비 편인 거 알지? ( ´͈ ᵕ `͈ )"
+                ];
+                return hanaDaily[Math.floor(Math.random() * hanaDaily.length)];
+            }
+
+            // 2. 원 (다정하고 몽글몽글 따스한 귀여운 소녀)
+            if (charId === 'won') {
+                if (msg.includes('안녕') || msg.includes('하이') || msg.includes('반가')) {
+                    return "나비야 반가워어~ 헤헤 오늘 날씨도 좋은데 기분은 어때? 🌸";
+                }
+                if (msg.includes('밥') || msg.includes('먹') || msg.includes('배고')) {
+                    return "배고프면 든든하게 따뜻한 밥 챙겨 먹어야 해! 빈속이면 힘 안 나잖아 토닥토닥 🥣✨";
+                }
+                if (msg.includes('뭐해') || msg.includes('심심') || msg.includes('놀자')) {
+                    return "나는 좋아하는 음악 들으면서 책 읽고 있었어 🎧 나비랑 이렇게 도란도란 수다 떠니까 마음이 편해진다~";
+                }
+                if (msg.includes('귀여') || msg.includes('예뻐') || msg.includes('좋아')) {
+                    return "헤헤 고마워 나비야... 💖 나비의 다정한 마음 덕분에 오늘 하루가 반짝반짝 빛나는 것 같아!";
+                }
+                if (msg.includes('졸려') || msg.includes('잘자') || msg.includes('피곤') || msg.includes('잠')) {
+                    return "오늘도 정말 고생 많았어 나비야. 푹 쉬고 내일도 좋은 하루 맞이하자, 잘 자 포근한 꿈 꿔 💤🎀";
+                }
+                const wonDaily = [
+                    "나비랑 친구라서 참 다행이고 행복해. 우리 오래오래 친하게 지내자 🎀",
+                    "힘든 일 있으면 언제든 나한테 털어놔도 돼! 내가 다 들어줄게 🍀",
+                    "잔잔한 음악 들으니까 나비 생각이 나더라구~ 같이 들으면 좋을 텐데 🎵",
+                    "오늘도 소소하지만 행복한 일들이 가득했으면 좋겠어 나비야 ✨"
+                ];
+                return wonDaily[Math.floor(Math.random() * wonDaily.length)];
+            }
+
+            // 3. 모노 (장난기 많고 활기찬 귀여운 남자아이)
+            if (charId === 'mono') {
+                if (msg.includes('안녕') || msg.includes('하이') || msg.includes('반가')) {
+                    return "안녕 안녕! 나비 누나/친구 왔어?! 나 완전 기다렸잖아 ㅋㅋㅋ 🐾";
+                }
+                if (msg.includes('밥') || msg.includes('먹') || msg.includes('배고') || msg.includes('피자') || msg.includes('치킨')) {
+                    return "나 방금 치킨 먹었는데 짱 맛있었어! 나비도 맛있는 거 배 터지게 먹어라 🍕🍗";
+                }
+                if (msg.includes('뭐해') || msg.includes('심심') || msg.includes('놀자')) {
+                    return "나 게임하고 있었는데 나비랑 노는 게 백배 천배 더 재밌지! 무슨 얘기 할까? 🎮🔥";
+                }
+                if (msg.includes('귀여') || msg.includes('좋아') || msg.includes('멋있')) {
+                    return "헤헤 진짜?! 나 귀여워? 아니 멋있다고 해야지!! ㅋㅋㅋ 그래도 칭찬 고마워 기분 짱이다 🐾✨";
+                }
+                if (msg.includes('졸려') || msg.includes('잘자') || msg.includes('피곤') || msg.includes('잠')) {
+                    return "벌써 자러 가?! 아쉽지만 푹 자고 내일 또 나랑 놀아줘야 돼! 잘 자 좋은 꿈 꿔 😴💤";
+                }
+                const monoDaily = [
+                    "나 오늘 밖에서 축구하다가 넘어져서 무릎 까졌는데 금방 나았어! 나 씩씩하지? ⚽😆",
+                    "나비야 나 심심할 때마다 불쑥불쑥 찾아와도 되지? 약속했다! 🐾",
+                    "ㅋㅋㅋ 나비 진짜 재밌어! 나비랑 얘기하면 시간 가는 줄 모르겠다니까!",
+                    "오늘 날씨 완전 좋던데 같이 자전거 타러 갈 사람 손~! 🚴‍♂️"
+                ];
+                return monoDaily[Math.floor(Math.random() * monoDaily.length)];
+            }
+
+            // 4. 나비 (기본 주인공)
+            const nabiReplies = [
+                "메시지 확인했어! 보내줘서 정말 고마워 💕",
+                "히히 소중한 메시지 잘 간직할게! 우리 더 친하게 지내자 ✨",
+                "나비한테 DM 보내줘서 기뻐! 답장 남겨놓을게 🖤",
+                "우와 그런 이야기가 있었구나! 나중에 또 대화하자 😊"
+            ];
+            return nabiReplies[Math.floor(Math.random() * nabiReplies.length)];
+        }
+
+        // DM 전송
+        function sendUserDM() {
+            const text = dmInput.value.trim();
+            if (!text) return;
+
+            const now = new Date();
+            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+            const charId = currentCharId;
+            const dms = getCharDMs(charId);
+
+            dms.push({
+                sender: "user",
+                text: text,
+                time: timeStr
+            });
+            saveCharDMs(charId, dms);
+            dmInput.value = '';
+            renderCharDMs();
+
+            // 타이핑 애니메이션 표시
+            typingCharName.textContent = characters[charId].name.split(' ')[0];
+            typingIndicator.style.display = 'block';
+            dmChatBody.scrollTop = dmChatBody.scrollHeight;
+
+            // 0.8초 후 일상 대화 맞춤 답장
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+
+                const replyText = generateDailyReply(charId, text);
+                const rNow = new Date();
+                const rTimeStr = `${String(rNow.getHours()).padStart(2, '0')}:${String(rNow.getMinutes()).padStart(2, '0')}`;
+
+                const updated = getCharDMs(charId);
+                updated.push({
+                    sender: charId,
+                    text: replyText,
+                    time: rTimeStr
+                });
+                saveCharDMs(charId, updated);
+                
+                // 만약 현재 탭이 그대로라면 리렌더링
+                if (currentCharId === charId) {
+                    renderCharDMs();
+                }
+            }, 850);
+        }
+
+        dmSendBtn.addEventListener('click', sendUserDM);
+        dmInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                sendUserDM();
+            }
+        });
+
+        /* =========================================================
+           4. 방명록 기능
+           ========================================================= */
+        const guestbookForm = document.getElementById('guestbookForm');
+        const guestNameInput = document.getElementById('guestName');
+        const guestMessageInput = document.getElementById('guestMessage');
+        const guestbookList = document.getElementById('guestbookList');
+
+        const defaultGuestbook = [
+            { id: 1, name: "하나 🌸", message: "나비야 방명록 1등!! 오늘 하루도 행복하게 보내자 사랑해 💕", date: "2026.10.14" },
+            { id: 2, name: "원 🎀", message: "홈페이지 너무너무 예쁘다 나비야~ 항상 곁에서 응원할게! 💖", date: "2026.10.14" },
+            { id: 3, name: "모노 🐾", message: "누나 짱 멋있다!! 방명록에 발자국 남기고 감 🐾🐾 ㅋㅋㅋ", date: "2026.10.14" }
+        ];
+
+        function getGuestbookEntries() {
+            const stored = localStorage.getItem('guestbookEntries_v2');
+            if (!stored) {
+                localStorage.setItem('guestbookEntries_v2', JSON.stringify(defaultGuestbook));
+                return defaultGuestbook;
+            }
+            try { return JSON.parse(stored); } catch (e) { return defaultGuestbook; }
+        }
+
+        function renderGuestbook() {
+            const entries = getGuestbookEntries();
+            guestbookList.innerHTML = '';
+
+            if (entries.length === 0) {
+                guestbookList.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:0.88rem; padding:16px 0;">아직 방명록이 없어요. 첫 메시지를 남겨보세요! 💌</div>';
+                return;
+            }
+
+            entries.forEach(entry => {
+                const item = document.createElement('div');
+                item.className = 'guestbook-item';
+                item.innerHTML = `
+                    <div class="guestbook-item-header">
+                        <span class="guestbook-author">🎀 ${escapeHtml(entry.name)}</span>
+                        <div>
+                            <span class="guestbook-date">${entry.date}</span>
+                            <button class="guestbook-del-btn" onclick="deleteGuestbookEntry(${entry.id})" title="삭제">✕</button>
+                        </div>
+                    </div>
+                    <div class="guestbook-message">${escapeHtml(entry.message)}</div>
+                `;
+                guestbookList.appendChild(item);
+            });
+        }
+
+        guestbookForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = guestNameInput.value.trim();
+            const message = guestMessageInput.value.trim();
+
+            if (!name || !message) {
+                alert('이름과 메시지를 모두 입력해주세요! 💕');
+                return;
+            }
+
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+
+            const newEntry = {
+                id: Date.now(),
+                name: name,
+                message: message,
+                date: dateStr
+            };
+
+            const entries = getGuestbookEntries();
+            entries.unshift(newEntry);
+            localStorage.setItem('guestbookEntries_v2', JSON.stringify(entries));
+
+            guestNameInput.value = '';
+            guestMessageInput.value = '';
+            renderGuestbook();
+        });
+
+        window.deleteGuestbookEntry = function(id) {
+            if (!confirm('이 방명록 글을 삭제할까요?')) return;
+            let entries = getGuestbookEntries();
+            entries = entries.filter(entry => entry.id !== id);
+            localStorage.setItem('guestbookEntries_v2', JSON.stringify(entries));
+            renderGuestbook();
+        };
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 초기 실행
+        renderTweets();
+        renderGuestbook();
+        switchChar('nabi');
+    </script>
+</body>
+</html>
